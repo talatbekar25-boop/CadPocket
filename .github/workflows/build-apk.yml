@@ -14,21 +14,32 @@ jobs:
       - name: Projeyi indir
         uses: actions/checkout@v4
 
-      - name: Java kur
+      - name: Java 17 kur
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Gradle kur
+      - name: Gradle 8.9 kur
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Ornek DXF dosyasini uygulamaya hazirla
+        run: |
+          mkdir -p CadPocket/app/src/main/res/raw
+          cp CadPocket/sample/ornek.dxf CadPocket/app/src/main/res/raw/ornek.dxf
+          test -f CadPocket/app/src/main/res/raw/ornek.dxf
+          test -f CadPocket/app/src/main/java/com/example/cadpocket/MainActivity.kt
+          test -f CadPocket/app/src/main/res/layout/activity_main.xml
 
       - name: APK olustur
         working-directory: CadPocket
-        run: gradle assembleDebug
+        run: gradle clean assembleDebug --stacktrace
 
       - name: APK dosyasini yukle
         uses: actions/upload-artifact@v4
         with:
-          name: CadPocket-debug-apk
-          path:  CadPocket/app/build/outputs/apk/debug/app-debug.apk
+          name: CadPocket-v3-debug-apk
+          path: CadPocket/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
