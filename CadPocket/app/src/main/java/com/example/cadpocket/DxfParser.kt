@@ -31,30 +31,40 @@ object DxfParser {
                 p = end
             } else p++
         }
-        if (out.isEmpty()) throw IllegalArgumentException("Desteklenen DXF nesnesi bulunamadı. ASCII DXF deneyin.")
+        if (out.isEmpty()) {
+            throw IllegalArgumentException("Desteklenen DXF nesnesi bulunamadı. ASCII DXF deneyin.")
+        }
         return Drawing(out)
     }
 
     private fun first(block: List<PairCode>, code: Int): Float? =
         block.firstOrNull { it.code == code }?.value?.toFloatOrNull()
 
+    private fun layer(block: List<PairCode>): String =
+        block.firstOrNull { it.code == 8 }?.value?.ifBlank { "0" } ?: "0"
+
     private fun parseLine(b: List<PairCode>): Entity.Line? {
-        val x1 = first(b, 10) ?: return null; val y1 = first(b, 20) ?: return null
-        val x2 = first(b, 11) ?: return null; val y2 = first(b, 21) ?: return null
-        return Entity.Line(Pt(x1, y1), Pt(x2, y2))
+        val x1 = first(b, 10) ?: return null
+        val y1 = first(b, 20) ?: return null
+        val x2 = first(b, 11) ?: return null
+        val y2 = first(b, 21) ?: return null
+        return Entity.Line(Pt(x1, y1), Pt(x2, y2), layer(b))
     }
 
     private fun parseCircle(b: List<PairCode>): Entity.Circle? {
-        val x = first(b, 10) ?: return null; val y = first(b, 20) ?: return null
+        val x = first(b, 10) ?: return null
+        val y = first(b, 20) ?: return null
         val r = first(b, 40) ?: return null
-        return Entity.Circle(Pt(x, y), r)
+        return Entity.Circle(Pt(x, y), r, layer(b))
     }
 
     private fun parseArc(b: List<PairCode>): Entity.Arc? {
-        val x = first(b, 10) ?: return null; val y = first(b, 20) ?: return null
+        val x = first(b, 10) ?: return null
+        val y = first(b, 20) ?: return null
         val r = first(b, 40) ?: return null
-        val a1 = first(b, 50) ?: return null; val a2 = first(b, 51) ?: return null
-        return Entity.Arc(Pt(x, y), r, a1, a2)
+        val a1 = first(b, 50) ?: return null
+        val a2 = first(b, 51) ?: return null
+        return Entity.Arc(Pt(x, y), r, a1, a2, layer(b))
     }
 
     private fun parseLwPolyline(b: List<PairCode>): Entity.Polyline? {
@@ -72,6 +82,6 @@ object DxfParser {
         }
         if (pts.size < 2) return null
         val flags = b.firstOrNull { it.code == 70 }?.value?.toIntOrNull() ?: 0
-        return Entity.Polyline(pts, flags and 1 == 1)
+        return Entity.Polyline(pts, flags and 1 == 1, layer(b))
     }
 }
