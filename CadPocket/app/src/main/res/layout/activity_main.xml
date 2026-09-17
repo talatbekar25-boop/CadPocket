@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,34 +9,76 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="#FFFFFF">
+        android:padding="8dp">
 
         <Button
             android:id="@+id/openButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DXF Aç" />
+            android:text="DXF AÇ" />
+
+        <Button
+            android:id="@+id/sampleButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ÖRNEK AÇ" />
 
         <Button
             android:id="@+id/fitButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Sığdır" />
+            android:layout_weight="1"
+            android:text="SIĞDIR" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <Button
+            android:id="@+id/measureButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ÖLÇ" />
+
+        <Button
+            android:id="@+id/clearMeasureButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TEMİZLE" />
+
+        <Button
+            android:id="@+id/layersButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="KATMANLAR" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/statusText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="14dp"
-        android:paddingVertical="8dp"
+        android:padding="10dp"
         android:text="Bir DXF dosyası seçin"
-        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/coordinateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="8dp"
+        android:text="X: --   Y: --"
         android:textSize="14sp" />
 
     <com.example.cadpocket.DxfView
@@ -44,4 +87,5 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#111111" />
+
 </LinearLayout>
