@@ -25,13 +25,12 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Ornek DXF dosyasini uygulamaya hazirla
+      - name: DXF dosyasini hazirla
         run: |
-          mkdir -p CadPocket/app/src/main/res/raw
-          cp CadPocket/sample/ornek.dxf CadPocket/app/src/main/res/raw/ornek.dxf
-          test -f CadPocket/app/src/main/res/raw/ornek.dxf
-          test -f CadPocket/app/src/main/java/com/example/cadpocket/MainActivity.kt
-          test -f CadPocket/app/src/main/res/layout/activity_main.xml
+          rm -f CadPocket/app/src/main/res/raw/ornek.dxf
+          mkdir -p CadPocket/app/src/main/assets
+          cp CadPocket/sample/ornek.dxf CadPocket/app/src/main/assets/ornek.dxf
+          test -f CadPocket/app/src/main/assets/ornek.dxf
 
       - name: APK olustur
         working-directory: CadPocket
@@ -40,6 +39,6 @@ jobs:
       - name: APK dosyasini yukle
         uses: actions/upload-artifact@v4
         with:
-          name: CadPocket-v3-debug-apk
+          name: CadPocket-v3-duzeltilmis-apk
           path: CadPocket/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
